@@ -30,9 +30,9 @@ COMMIT;
 pathname = os.path.dirname(sys.argv[0])        
 full_path = os.path.abspath(pathname)
 
-if os.path.exists(f"{full_path}/website/db.sqlite"):
-	print('db.sqlite already exists')
+if os.path.exists(f"{full_path}/db.sqlite3"):
+	print('db.sqlite3 already exists')
 else:
-	conn = sqlite3.connect(f"{full_path}/website/db.sqlite")
+	conn = sqlite3.connect(f"{full_path}/db.sqlite3")
 	conn.cursor().executescript(db)
 	conn.commit()
