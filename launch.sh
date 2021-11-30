@@ -9,6 +9,13 @@ if [ ! -d "$VENV_DIR" ]; then
     exit
 fi
 
-source ${SCRIPTPATH}/venv/bin/activate
+source $SCRIPTPATH/venv/bin/activate
+
+if [ ! -f "${SCRIPTPATH}/website/db.sqlite" ]; then
+    echo "db does not exist, creating..."
+    PY_SCRIPT="${SCRIPTPATH}/create_db.py"
+    echo $PY_SCRIPT
+    python3 $PY_SCRIPT
+fi
 
 python3 $SCRIPTPATH/website/manage.py runserver
