@@ -5,7 +5,20 @@
     </head>
 
     <body>
-        Hello World!
+        Welcome to the totally secure website!
+
+        <br>
+        <a href="/post">
+            <button>Make a post</button>
+        <a>
+
+        {% for post in posts %}
+            <hr>
+            <h2>{{ post.title }}</h2>
+            <p>Created: {{ post.creation }}</p>
+            <p>Posted by: {{ post.poster }}</p>
+            <img src={{ post.image_url }}>
+        {% endfor %}
     </body>
 
 </html>

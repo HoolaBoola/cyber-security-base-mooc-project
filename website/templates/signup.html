@@ -1,0 +1,16 @@
+<h2>Sign up</h2>
+<form action="/signup/" method="POST">
+    {% csrf_token %}
+
+    <label for="username">Username:</label>
+    <input type="text" name="username"></input>
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password"></input>
+    <br>
+
+    <button type="submit">Create account</button>
+</form>
+
+<a href="/login/">Login as existing user instead</a>

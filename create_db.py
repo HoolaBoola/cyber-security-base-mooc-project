@@ -8,19 +8,35 @@ PRAGMA foreign_keys=OFF;
 
 BEGIN TRANSACTION;
 
-CREATE TABLE Users (name TEXT, password TEXT, admin BOOL);
+CREATE TABLE Users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT, 
+    password TEXT, 
+    admin BOOL
+);
 
-INSERT INTO Users VALUES('admin','coffee',1);
+INSERT INTO Users (name, password, admin) VALUES('admin','coffee',1);
 
-INSERT INTO Users VALUES('bob','passwd',0);
+INSERT INTO Users (name, password, admin) VALUES('bob','passwd',0);
 
-CREATE TABLE Tasks (name TEXT, body TEXT);
+CREATE TABLE Posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT, 
+    body TEXT, 
+    image_url TEXT, 
+    creator INTEGER,
+    created_on DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(creator) REFERENCES Users(id)
+);
 
-INSERT INTO Tasks VALUES('bob','become admin');
-
-INSERT INTO Tasks VALUES('admin','good to be king');
-
-INSERT INTO Tasks VALUES('bob','profit');
+INSERT INTO Posts 
+    (title, body, image_url, creator) 
+    VALUES(
+        'First post', 
+        'This is my first post', 
+        'https://i.kym-cdn.com/photos/images/newsfeed/000/096/044/trollface.jpg?1296494117', 
+        1
+    );
 
 COMMIT;
 
