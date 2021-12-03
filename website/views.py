@@ -61,6 +61,8 @@ def post(request):
 
     title = request.POST.get('title')
     body = request.POST.get('body')
+
+    # this needs to be sanitized!
     url = request.POST.get('url')
     private = 1 if request.POST.get('private') else 0
 
