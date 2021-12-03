@@ -5,6 +5,7 @@ from django.db import connection
 db_name = connection.settings_dict['NAME']
 
 def posts_by_user(request, userid):
+    # here we would need to verify no private posts would be shown
     conn = get_connection()
     stmt = f"SELECT * FROM Posts JOIN Users ON Posts.creator = Users.id WHERE creator = {userid} ;"
     cursor = conn.cursor()
