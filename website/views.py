@@ -54,6 +54,8 @@ def login(request):
 
 
 def post(request):
+    # here is missing user verification. 
+    # If the user is not logged in, redirect to login page
     if request.method == "GET":
         return render(request, 'post.html')
 
