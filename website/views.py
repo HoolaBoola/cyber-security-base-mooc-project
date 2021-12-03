@@ -62,7 +62,7 @@ def post(request):
     private = 1 if request.POST.get('private') else 0
 
     stmt = f"INSERT INTO Posts (title, body, image_url, creator, is_private) VALUES ('{title}', '{body}', '{url}', (SELECT id FROM Users WHERE name = '{request.session['username']}'), {private});"
-    
+    print(stmt)
     conn = get_connection()
     cursor = conn.cursor()
 

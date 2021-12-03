@@ -62,13 +62,45 @@ You might receive error messages regarding "unapplied migrations". To fix this, 
 
 ### A1:2017 - Injection
 
+The application is vulnerable to SQL injection. For example in `views.py`, in the function `post` the SQL statement is formed with a simple f-string substitution.
+
+Example:
+
+When making a post, enter the following as the title (single quotes included):
+
+`' || (SELECT password FROM Users WHERE name = 'admin') || '`
+
+This creates a post with the admin's password in the title. Very secure.
+
 ### A3:2017 - Sensitive Data Exposure
+
+The application uses unencrypted HTTP messages to pass data – including password. This exposes the data to malicious actors. Below is a snippet from Wireshark's capture from logging in as admin:
+
+```
+csrfmiddlewaretoken=eqoUiIzpvuVz4FFFmtNuvtBsQuxakxIEo0nRXPO32ay12kostE59VTQvfTPCa1wF&username=admin&passwo
+rd=coffee^@8^D^@^@^
+```
+
+Note the "coffee" in there - the default admin password is visible to anyone capturing the packet.
 
 ### A5:2017 - Broken Access Control
 
+The application has weak access control. For example, going to `/user/1` shows any posts made by the user with id 1. However, this page also displays any posts marked as private (which are supposed to be viewable by only the user themselves), even without logging in.
+
 ### A7:2017 - Cross-Site Scripting
 
-\" onClick=alert("hacked!")
+The application doesn't attempt to sanitize any data entered by users. For example, when making a post, enter the following as the image url:
+
+`/logout`
+
+This causes everyone to be logged out when refreshing the main page. You could also enter strings such as 
+
+`\" onClick=alert("hacked!")`
+
+which enable malicious JavaScript to be executed (in this case, it requires users to click the image, though)
+
+Additionally, the URL provided could lead to an image with malicious data in it – SVG's, for example, can contain almost anything in them and should *not* be run from untrusted sources.
 
 ### A10:2017 - Insufficient Logging & Monitoring
 
+The application does not do *any* logging or monitoring. Because of this, it could be very hard to notice any malicious activity, or even accidental errors, which enables the malfunctionality to continue uninterrupted.
