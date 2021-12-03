@@ -9,7 +9,7 @@
   * [Launching the program](#launching-the-program)
     + [Launch using the script](#launch-using-the-script)
     + [Launch manually](#launch-manually)
-  * [OWASP 2017](#owasp-2017)
+  * [Vulnerabilities - OWASP 2017](#vulnerabilities---owasp-2017)
     + [A1:2017 - Injection](#a1-2017---injection)
     + [A3:2017 - Sensitive Data Exposure](#a3-2017---sensitive-data-exposure)
     + [A5:2017 - Broken Access Control](#a5-2017---broken-access-control)
@@ -78,7 +78,7 @@ You might receive error messages regarding "unapplied migrations". To fix this, 
 
 `python3 manage.py migrate`
 
-## OWASP 2017
+## Vulnerabilities - OWASP 2017
 
 ### A1:2017 - Injection
 
