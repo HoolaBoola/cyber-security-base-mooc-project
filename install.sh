@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-version=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
+version=$(python3 -V 2>&1 | grep -Po '(?<=Python )(.+)')
 if [[ -z "$version" ]]
 then
-    echo "Python not installed!" 
+    echo "Python 3 not installed!" 
     exit
 fi
 

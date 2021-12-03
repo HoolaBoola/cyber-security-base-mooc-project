@@ -2,20 +2,31 @@
 <form action="/post/" method="POST">
     {% csrf_token %}
 
-    <label for="title">title:</label>
-    <input type="text" name="title"></input>
-    <br>
+    <div>
+        <label for="title">title:</label>
+        <input type="text" name="title"></input>
+    </div>
 
-    <label for="body">post body:</label>
-    <input type="text" name="body"></input>
-    <br>
-    <label for="url">image url:</label>
-    <input type="text" name="url"></input>
-    <br>
+    <div>
+        <label for="body">post body:</label>
+        <textarea type="text" name="body"></textarea>
+    </div>
+    <div>
+        <label for="url">image url:</label>
+        <input type="text" name="url"></input>
+    </div>
 
-    <button type="submit">Login</button>
+    <div>
+        <label for"private">make private?</label>
+        <input style="vertical-align:middle" type="checkbox" name="private" />
+    </div>
+
+    <button type="submit">Post</button>
 </form>
-
+<style>
+input {
+}
+</style>
 {% if error_msg %}
 <p style="color: red">{{ error_msg }}</p>
 {% endif %}

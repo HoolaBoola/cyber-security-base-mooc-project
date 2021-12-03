@@ -1,0 +1,13 @@
+Posts by {{username}}
+
+<br>
+
+{% for post in posts %}
+    <hr>
+    <h2>{{ post.title }}</h2>
+    <p>Created: {{ post.creation }}</p>
+    <p>Post body:</p>
+    <p>{{post.body}}</p>
+    <img src={{ post.image_url }}>
+{% endfor %}
+

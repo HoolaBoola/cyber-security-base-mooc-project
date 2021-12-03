@@ -26,6 +26,7 @@ CREATE TABLE Posts (
     image_url TEXT, 
     creator INTEGER,
     created_on DEFAULT CURRENT_TIMESTAMP,
+    is_private BOOL,
     FOREIGN KEY(creator) REFERENCES Users(id)
 );
 

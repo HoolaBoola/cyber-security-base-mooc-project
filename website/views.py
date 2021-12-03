@@ -4,15 +4,29 @@ import sqlite3
 from django.db import connection
 db_name = connection.settings_dict['NAME']
 
+def posts_by_user(request, userid):
+    conn = get_connection()
+    stmt = f"SELECT * FROM Posts JOIN Users ON Posts.creator = Users.id WHERE creator = {userid} ;"
+    cursor = conn.cursor()
+    response = cursor.execute(stmt)
+    posts = map(lambda x: {"title": x[1], "body": x[2], "image_url": x[3], "poster": x[7], "creation": x[5]}, response.fetchall())
+    
+    stmt = f"SELECT name FROM Users WHERE id = {userid};"
+    response = cursor.execute(stmt)
+    username = response.fetchone()[0]
+
+    print("posts:", posts)
+    return render(request, "user_posts.html", {"username": str(username), "posts": posts})
+
 def index(request):
     if not request.session.get("username"):
         return redirect("/login")
 
     conn = get_connection()
-    stmt = "SELECT title, body, image_url, name, created_on FROM Posts JOIN Users ON Posts.creator = Users.id ;"
+    stmt = "SELECT title, body, image_url, name, created_on, creator FROM Posts JOIN Users ON Posts.creator = Users.id ;"
     cursor = conn.cursor()
     response = cursor.execute(stmt)
-    posts = map(lambda x: {"title": x[0], "body": x[1], "image_url": x[2], "poster": x[3], "creation": x[4]}, response.fetchall())
+    posts = map(lambda x: {"title": x[0], "body": x[1], "image_url": x[2], "poster": x[3], "creation": x[4], "creator": x[5]}, response.fetchall())
     print(posts)
     return render(request, 'index.html', {"posts": posts})
 
@@ -45,10 +59,10 @@ def post(request):
     title = request.POST.get('title')
     body = request.POST.get('body')
     url = request.POST.get('url')
+    private = 1 if request.POST.get('private') else 0
 
-    stmt = f"INSERT INTO Posts (title, body, image_url, creator) VALUES ('{title}', '{body}', '{url}', (SELECT id FROM Users WHERE name = '{request.session['username']}'));"
+    stmt = f"INSERT INTO Posts (title, body, image_url, creator, is_private) VALUES ('{title}', '{body}', '{url}', (SELECT id FROM Users WHERE name = '{request.session['username']}'), {private});"
     
-    print(stmt)
     conn = get_connection()
     cursor = conn.cursor()
 
