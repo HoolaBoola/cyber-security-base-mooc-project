@@ -87,7 +87,13 @@ def signup(request):
     return render(request, 'signup.html')
 
 def create_user(username: str, password: str):
-    print(username, password)
+    stmt = f"INSERT INTO Users (name, password, admin) VALUES ('{username}', '{password}', 0);"
+    print(stmt)
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(stmt)
+    conn.commit()
+
 
 def get_connection():
     return sqlite3.connect(db_name)
