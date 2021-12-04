@@ -25,7 +25,16 @@ fi
 echo "Sourcing venv..."
 source venv/bin/activate
 
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
+
+if [ ! -f "${SCRIPTPATH}/db.sqlite3" ]; then
+    echo "db does not exist, creating..."
+    PY_SCRIPT="${SCRIPTPATH}/create_db.py"
+    echo $PY_SCRIPT
+    python3 $PY_SCRIPT
+fi
+
+python3 manage.py migrate
 deactivate
 
 exit

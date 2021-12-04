@@ -31,14 +31,24 @@ CREATE TABLE Posts (
 );
 
 INSERT INTO Posts 
-    (title, body, image_url, creator) 
+    (title, body, image_url, creator, is_private) 
     VALUES(
         'First post', 
         'This is my first post', 
         'https://i.kym-cdn.com/photos/images/newsfeed/000/096/044/trollface.jpg?1296494117', 
+        1,
         1
     );
 
+INSERT INTO Posts 
+    (title, body, image_url, creator, is_private) 
+    VALUES(
+        'Cute image', 
+        'This is my first post', 
+        'https://i.kym-cdn.com/entries/icons/original/000/014/313/uwu.jpg',
+        2,
+        0
+    );
 COMMIT;
 
 """
